@@ -1,5 +1,5 @@
-# MemriseUtilities
-User script with useful additions to the Memrise language learning site.
+# MemJS
+An unofficial Memrise utility allowing Memrise users and creators to download courses
 
 # Installation
 First, you will need the appropriate user script addon for your browser:
