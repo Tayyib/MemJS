@@ -1,16 +1,16 @@
 // ==UserScript==
-// @name          MemriseUtilities
-// @namespace     http://ligature.me
-// @version       0.9.5
+// @name          MemJS
+// @version       0.1
+// @description   Download Memrise courses. For users and creators.
+// @author        Tayyib <m.tayyib.yel@gmail.com>
+// @copyright     Licensed under Apache 2.0
+// @namespace     https://tampermonkey.net
+// @homepageURL   https://github.com/Tayyib/MemJS
+// @updateURL     https://github.com/Tayyib/MemJS/raw/master/MemJS.user.js
+// @downloadURL   https://github.com/Tayyib/MemJS/raw/master/MemJS.user.js
+// @icon          https://d2rhekw5qr4gcj.cloudfront.net/img/new_favicon.ico
 // @grant         none
-// @description   Various helper functions for Memrise and some other EO sites.
-// @icon          http://cdn.altrn.tv/icons/memrise_10088.png?width=50&height=50&mode=crop&anchor=middlecenter
-// @homepageURL   https://github.com/scytalezero/MemriseUtilities
-// @updateURL     https://github.com/scytalezero/MemriseUtilities/raw/master/MemriseUtilities.user.js
-// @downloadURL   https://github.com/scytalezero/MemriseUtilities/raw/master/MemriseUtilities.user.js
-// @match         https://*.memrise.com/course/*
-// @match         http://akademio-de-esperanto.org/akademia_vortaro/*
-// @copyright     2012+, ScytaleZero
+// @match         http:*//*.memrise.com/course/*
 // ==/UserScript==
 
 var Wordlist, Promises, CourseTag;
@@ -22,7 +22,7 @@ function Main() {
       $("<input type='button' value='List Words' />")
         .click(AkademioList)
         .prependTo("h3.trafonombro");
-      
+
       function AkademioList() {
         $("h3.trafonombro").append("<div><textarea id='Wordlist' style='width:800px; height:400px;'></textarea></div>");
         $("#serchorezultotabelo tr").each(function(Index) {
@@ -66,20 +66,20 @@ function SpiderLevels() {
       url: URL
     }).done(ExtractTerms));
   });
-  
+
   $.when.apply($, Promises).done(SpiderDone);
 }
 
 //All levels have been parsed and the wordlist is done.
 function SpiderDone() {
   var WordlistText = "", LCV;
-  
+
   Out("Wordlist parsed.");
   //Add the wordlist text area.
   $("#WordListContainer").empty().append("<div><h2>Course Wordlist as TSV</h2><textarea id='Wordlist' style='width:800px; height:400px;'></textarea><p>&nbsp;</p></div>");
   for (var Level in Wordlist) {
     for (LCV=0; LCV<Wordlist[Level].length; LCV++) {
-      WordlistText += Wordlist[Level][LCV].Word + "\t" + Wordlist[Level][LCV].Translation + "\t" + 
+      WordlistText += Wordlist[Level][LCV].Word + "\t" + Wordlist[Level][LCV].Translation + "\t" +
         CourseTag + "," + SanitizeTag(Level) + "\n";
     }
   }
