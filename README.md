@@ -2,11 +2,11 @@
 An unofficial Memrise utility allowing Memrise users and creators to download courses
 
 # Installation
-First, you will need the appropriate user script addon for your browser:
+First, you will need the appropriate user script add-on for your browser:
 - Chrome: [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en)
 - Firefox: [Greasemonkey](https://addons.mozilla.org/en-us/firefox/addon/greasemonkey/)
  
-Next, [just click here](https://github.com/scytalezero/MemriseUtilities/raw/master/MemriseUtilities.user.js) and you should be prompted to install the script. That's it!
+Next, [just click here](https://github.com/Tayyib/MemJS/raw/master/MemJS.user.js) and you should be prompted to install the script. That's it!
 
 # Features
 Currently, MemriesUtilities only adds the ability to export the list of words and definitions from a Memrise course. Once the script is installed, navigating to the main page of a course will show a new "Word list" button next to "Difficult words".
