@@ -1,2 +1,7 @@
-# IDE's files
-*.idea
+# Ignore everything
+*.*
+# except:
+!MemJS.user.js
+!LICENSE
+!README.md
+!.gitignore
