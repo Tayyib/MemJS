@@ -19,28 +19,53 @@
 Forked from github.com/scytalezero/MemriseUtilities
  */
 
-var methodTwoRegex = /.*\/edit\/.*/i;
-var methodThreeRegex = /.*\/edit\/database\/.*/i;
+var editPageRegex = /.*\/edit\/.*/i;
+var databasePageRegex = /.*\/edit\/database\/.*/i;
+var onProgress = false;
+var ButtonGet;
+var levelCount;
 
-function Main()
+(function ()
 {
-    if (document.URL.search(methodThreeRegex) === 0)
+    'use strict';
+
+    $("ul.nav-pills").append("<li><a class='tab' id='ButtonGet' href='#' style='font-weight: bold;'>Get Bulk</a></li>");
+
+    ButtonGet = $("#ButtonGet");
+    ButtonGet.click(OnClick);
+
+    if (document.URL.search(databasePageRegex) === 0)
     {
-        console.log("Yöntem 3: Veritabanından getir.");
+        levelCount = $(".pagination-centered li:nth-last-child(2)").text().replace(/\s+/g, '');
     }
-    else if (document.URL.search(methodTwoRegex) === 0)
+    else if (document.URL.search(editPageRegex) === 0)
     {
-        console.log("Yöntem 2: Düzenleyici ekranından getir.");
+        levelCount = $(".level.collapsed:last-child .level-handle")[0].textContent;
     }
     else
     {
-        console.log("Yöntem 1: Kurs ekranından getir.");
+        levelCount = $(".level:last-child .level-index")[0].textContent;
     }
-}
 
-function InsertButton()  // TODO
-{
-    // TODO
-}
+    function OnClick()  // TODO
+    {
+        if (onProgress)
+        {
+            console.log("[WARNING] Already in progress!");
+            return;
+        }
 
-Main();
+        onProgress = true;
+
+        ButtonGet.text("In progress...");
+        ButtonGet.unbind("click");
+
+        // TODO
+    }
+
+    function OnFinish()  // TODO
+    {
+        onProgress = false;
+        ButtonGet.bind("click");
+    }
+})();
