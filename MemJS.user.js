@@ -11,8 +11,6 @@
 // @icon          https://d2rhekw5qr4gcj.cloudfront.net/img/new_favicon.ico
 // @grant         none
 // @match         *://www.memrise.com/course/*
-// @match         *://www.memrise.com/course/*/edit
-// @match         *://www.memrise.com/course/*/edit/database/*
 // ==/UserScript==
 
 /*
@@ -24,34 +22,43 @@ var databasePageRegex = /.*\/edit\/database\/.*/i;
 var onProgress = false;
 var ButtonGet;
 var levelCount;
+var dataURL;
 
 (function ()
 {
     'use strict';
+
+    if (document.URL.search(databasePageRegex) === 0)
+    {
+        dataURL = document.URL + "?page=%s";
+        levelCount = $(".pagination-centered li:nth-last-child(2)").text().replace(/\s+/g, '');
+    }
+    else if (document.URL.search(editPageRegex) === 0)
+    {
+        dataURL = document.URL + "%s";
+        levelCount = $(".level.collapsed:last-child .level-handle")[0].textContent;
+    }
+    else if ($(".levels.clearfix").length !== 0)
+    {
+        dataURL = document.URL + "%s";
+        levelCount = $(".level:last-child .level-index")[0].textContent;
+    }
+    else
+    {
+        print("Unrelated page!");
+        return;
+    }
 
     $("ul.nav-pills").append("<li><a class='tab' id='ButtonGet' href='#' style='font-weight: bold;'>Get Bulk</a></li>");
 
     ButtonGet = $("#ButtonGet");
     ButtonGet.click(OnClick);
 
-    if (document.URL.search(databasePageRegex) === 0)
-    {
-        levelCount = $(".pagination-centered li:nth-last-child(2)").text().replace(/\s+/g, '');
-    }
-    else if (document.URL.search(editPageRegex) === 0)
-    {
-        levelCount = $(".level.collapsed:last-child .level-handle")[0].textContent;
-    }
-    else
-    {
-        levelCount = $(".level:last-child .level-index")[0].textContent;
-    }
-
     function OnClick()  // TODO
     {
         if (onProgress)
         {
-            console.log("[WARNING] Already in progress!");
+            print("Already in progress");
             return;
         }
 
@@ -60,6 +67,11 @@ var levelCount;
         ButtonGet.text("In progress...");
         ButtonGet.unbind("click");
 
+        // TODO - ajax, push, promises, async=?
+    }
+
+    function AbstractData()
+    {
         // TODO
     }
 
@@ -69,3 +81,8 @@ var levelCount;
         ButtonGet.bind("click");
     }
 })();
+
+function print(string)
+{
+    console.log("[MEMJS] " + string);
+}
