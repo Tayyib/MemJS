@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          MemJS
-// @version       0.3
+// @version       0.4
 // @description   Download Memrise courses. For users and creators.
 // @author        Tayyib <m.tayyib.yel@gmail.com>
 // @copyright     Licensed under Apache 2.0
@@ -54,11 +54,12 @@ var step;
     {
         var htmlButton = "<li><button class='tab' id='MemJS-Button' style='font-weight:bold;'>Download!</button></li>";
         var htmlMemJS =
-            "<div id='MemJS-UI'>" +
-            "<div id='MemJS-Header' style='padding:0 10px;'>" +
+            "<div id='MemJS-UI' style='padding:0 12px;'>" +
+            "<div id='MemJS-Header'>" +
             "<h3 id='MemJS-Title' style='display:inline;'>Loading...</h3>" +
+            "<div id='MemJS-Buttons' style='display:inline;'>" +
             "<button style='float:right;'>Copy Data</button>" +
-            "</div>" +
+            "</div></div>" +
             "<textarea id='MemJS-TextArea' style='width:100%; height:222px;'></textarea>" +
             "</div>";
 
@@ -71,6 +72,7 @@ var step;
     function OnClick()  // TODO
     {
         $('#MemJS-Button').hide();
+        $('#MemJS-Buttons').hide();
         $('#MemJS-TextArea').hide();
         $('#MemJS-UI').show();
 
@@ -105,6 +107,7 @@ var step;
     function OnFinish()  // TODO
     {
         $('#MemJS-Button').show();
+        $('#MemJS-Buttons').show();
         $('#MemJS-TextArea').show();
     }
 })();
