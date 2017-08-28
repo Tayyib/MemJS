@@ -30,17 +30,17 @@ var step;
     if (document.URL.search(databasePageRegex) === 0)
     {
         dataURL = document.URL + '?page=%s';
-        levelCount = $(".pagination-centered li:nth-last-child(2)").text().replace(/\s+/g, '');
+        levelCount = Number($(".pagination-centered li:nth-last-child(2)").text().replace(/\s+/g, ''));
     }
     else if (document.URL.search(editPageRegex) === 0)
     {
         dataURL = document.URL + '%s';
-        levelCount = $(".level.collapsed:last-child .level-handle")[0].textContent;
+        levelCount = Number($(".level.collapsed:last-child .level-handle")[0].textContent);
     }
     else if ($(".levels.clearfix").length !== 0)
     {
         dataURL = document.URL + '%s';
-        levelCount = $(".level:last-child .level-index")[0].textContent;
+        levelCount = Number($(".level:last-child .level-index")[0].textContent);
     }
     else
     {
@@ -55,7 +55,7 @@ var step;
         var htmlButton = "<li><button class='tab' id='MemJS-Button' style='font-weight:bold;'>Download!</button></li>";
         var htmlMemJS =
             "<div id='MemJS-UI'>" +
-            "<div id='MemJS-Header'>" +
+            "<div id='MemJS-Header' style='padding:0 10px;'>" +
             "<h3 id='MemJS-Title' style='display:inline;'>Loading...</h3>" +
             "<button style='float:right;'>Copy Data</button>" +
             "</div>" +
@@ -64,17 +64,17 @@ var step;
 
         $('ul.nav-pills').append(htmlButton);
         $('div.container-main').prepend(htmlMemJS);
-        // $('#MemJS-UI').hide();
-
+        $('#MemJS-UI').hide();
         $('#MemJS-Button').click(OnClick);
     }
 
     function OnClick()  // TODO
     {
-        $('#MemJS-Button').unbind('click');
-        $('#MemJS-Button').text("In progress...");
+        $('#MemJS-Button').hide();
+        $('#MemJS-TextArea').hide();
+        $('#MemJS-UI').show();
 
-        step = 0;
+        step = 1;
 
         for (var i = 1; i <= levelCount; i++)
         {
@@ -91,7 +91,6 @@ var step;
 
     function AbstractData(data, status, jqXHR) // TODO
     {
-        step++;
         $('#MemJS-Title').html("Loading... " + step + "/" + levelCount);
 
         $(data).find("tbody.things > tr div.text").each(function (index)  // fixme!
@@ -100,11 +99,13 @@ var step;
         });
 
         if (step === levelCount) OnFinish();
+        else step++;
     }
 
     function OnFinish()  // TODO
     {
-        $('#MemJS-Button').bind('click');
+        $('#MemJS-Button').show();
+        $('#MemJS-TextArea').show();
     }
 })();
 
