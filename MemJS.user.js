@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          MemJS
-// @version       0.6
+// @version       0.7
 // @description   Download Memrise courses. For users and creators.
 // @author        Tayyib <m.tayyib.yel@gmail.com>
 // @copyright     Licensed under Apache 2.0
@@ -67,6 +67,7 @@ var step;
             $('#MemJS-CopyData').hide();
             $('#MemJS-ShowHide').click(ShowHideMemJS);
             $('#MemJS-Download').click(DoAjax);
+            $('#MemJS-CopyData').click(CopyData);
         });
     }
 
@@ -131,6 +132,12 @@ var step;
         $('#MemJS-TextArea').show();
 
         $('#MemJS-Title').text("Here is the course data (text only):");
+    }
+
+    function CopyData()
+    {
+        $('#MemJS-TextArea').select();
+        document.execCommand('copy');
     }
 })();
 
