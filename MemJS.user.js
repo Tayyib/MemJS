@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          MemJS
-// @version       0.5
+// @version       0.6
 // @description   Download Memrise courses. For users and creators.
 // @author        Tayyib <m.tayyib.yel@gmail.com>
 // @copyright     Licensed under Apache 2.0
@@ -21,6 +21,7 @@ var html = "https://raw.githubusercontent.com/Tayyib/MemJS/master/MemJS.html";
 var editPageRegex = /.*\/edit\/.*/i;
 var databasePageRegex = /.*\/edit\/database\/.*/i;
 var columnDelimiter = '\t';
+var data = [];
 var dataURL;
 var levelCount;
 var step;
@@ -62,6 +63,8 @@ var step;
         $('div.MemJS-Holder').load(html, function ()
         {
             $('#MemJS-UI').hide();
+            $('#MemJS-TextArea').hide();
+            $('#MemJS-CopyData').hide();
             $('#MemJS-ShowHide').click(ShowHideMemJS);
             $('#MemJS-Download').click(DoAjax);
         });
@@ -77,14 +80,18 @@ var step;
 
     function DoAjax()
     {
-        $('#MemJS-Button').hide();
-        $('#MemJS-Buttons').hide();
-        $('#MemJS-TextArea').hide();
+        $('#MemJS-Download').hide();
         $('#MemJS-UI').show();
+        $('#MemJS-Title').html("Preparing...");
+
+        for (var i = 1; i <= levelCount; i++)
+        {
+            data[i] = "";
+        }
 
         step = 1;
 
-        for (var i = 1; i <= levelCount; i++)
+        for (i = 1; i <= levelCount; i++)
         {
             // @formatter:off
             $.ajax({
@@ -97,25 +104,33 @@ var step;
         }
     }
 
-    function AbstractData(data, status, jqXHR)
+    function AbstractData(ddata, status, jqXHR)
     {
         $('#MemJS-Title').html("Loading... " + step + "/" + levelCount);
 
-        $(data).find("tbody.things > tr div.text").each(function (index)  // fixme!
+        $(ddata).find("tbody.things > tr.thing").each(function (index)  // fixme!
         {
-            // TODO
+            var columnMatch = $(this).find('div.text');  // fixme!
+            columnMatch.each(function (index)
+            {
+                data[jqXHR.level] += $(this).text();
+                if (index !== columnMatch.length - 1) data[jqXHR.level] += columnDelimiter;
+            });
+
+            data[jqXHR.level] += '\n';
         });
 
         if (step === levelCount) OnFinish();
         else step++;
     }
 
-    function OnFinish()  // TODO
+    function OnFinish()
     {
-        $('#MemJS-Button').show();
-        $('#MemJS-Buttons').show();
+        $('#MemJS-CopyData').show();
+        $("#MemJS-TextArea").append(data);
         $('#MemJS-TextArea').show();
-        $('#MEMJS-TITLE').text("Here is the course data (text only):")
+
+        $('#MemJS-Title').text("Here is the course data (text only):");
     }
 })();
 
