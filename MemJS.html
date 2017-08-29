@@ -6,7 +6,7 @@
     <style>
         #MemJS-UI
         {
-            margin           : 0 15px;
+            margin           : 3px 15px;
             padding          : 0 12px;
             border-style     : solid;
             border-color     : rgb(222, 222, 222);
@@ -40,13 +40,14 @@
 <body>
 <div id='MemJS-UI'>
     <div id='MemJS-Header'>
-        <h3 id='MemJS-Title'>Loading...</h3>
+        <h3 id='MemJS-Title'>Ready to download the course.</h3>
+        <!-- TODO -> checkbox (#level tag), combobox (column delimiter) -->
         <div id='MemJS-Buttons'>
-            <button>Copy Data</button>
+            <button id='MemJS-Download'>Download!</button>
+            <button id='MemJS-CopyData'>Copy Data</button>
         </div>
     </div>
     <textarea id='MemJS-TextArea'></textarea>
-    <h4>%s suitable column(s) founded for downloading: %s</h4>
 </div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          MemJS
-// @version       0.4
+// @version       0.5
 // @description   Download Memrise courses. For users and creators.
 // @author        Tayyib <m.tayyib.yel@gmail.com>
 // @copyright     Licensed under Apache 2.0
@@ -17,8 +17,10 @@
 Forked from github.com/scytalezero/MemriseUtilities
  */
 
+var html = "https://raw.githubusercontent.com/Tayyib/MemJS/master/MemJS.html";
 var editPageRegex = /.*\/edit\/.*/i;
 var databasePageRegex = /.*\/edit\/database\/.*/i;
+var columnDelimiter = '\t';
 var dataURL;
 var levelCount;
 var step;
@@ -52,24 +54,28 @@ var step;
 
     function PrepareUI()
     {
-        var htmlButton = "<li><button class='tab' id='MemJS-Button' style='font-weight:bold;'>Download!</button></li>";
-        var htmlMemJS =
-            "<div id='MemJS-UI' style='padding:0 12px;'>" +
-            "<div id='MemJS-Header'>" +
-            "<h3 id='MemJS-Title' style='display:inline;'>Loading...</h3>" +
-            "<div id='MemJS-Buttons' style='display:inline;'>" +
-            "<button style='float:right;'>Copy Data</button>" +
-            "</div></div>" +
-            "<textarea id='MemJS-TextArea' style='width:100%; height:222px;'></textarea>" +
-            "</div>";
+        var htmlButton = "<li><button class='tab' id='MemJS-ShowHide' style='font-weight:bold;'>MemJS</button></li>";
+        var htmlHolder = "<div class='MemJS-Holder'></div>";
 
         $('ul.nav-pills').append(htmlButton);
-        $('div.container-main').prepend(htmlMemJS);
-        $('#MemJS-UI').hide();
-        $('#MemJS-Button').click(OnClick);
+        $('div.container-main').prepend(htmlHolder);
+        $('div.MemJS-Holder').load(html, function ()
+        {
+            $('#MemJS-UI').hide();
+            $('#MemJS-ShowHide').click(ShowHideMemJS);
+            $('#MemJS-Download').click(DoAjax);
+        });
     }
 
-    function OnClick()  // TODO
+    function ShowHideMemJS()
+    {
+        var ui = $('#MemJS-UI');
+
+        if (ui.is(':visible') === true) ui.hide();
+        else ui.show();
+    }
+
+    function DoAjax()
     {
         $('#MemJS-Button').hide();
         $('#MemJS-Buttons').hide();
@@ -91,7 +97,7 @@ var step;
         }
     }
 
-    function AbstractData(data, status, jqXHR) // TODO
+    function AbstractData(data, status, jqXHR)
     {
         $('#MemJS-Title').html("Loading... " + step + "/" + levelCount);
 
@@ -109,6 +115,7 @@ var step;
         $('#MemJS-Button').show();
         $('#MemJS-Buttons').show();
         $('#MemJS-TextArea').show();
+        $('#MEMJS-TITLE').text("Here is the course data (text only):")
     }
 })();
 
