@@ -2,6 +2,7 @@
 *.*
 # except:
 !MemJS.user.js
+!MemJS.html
 !LICENSE
 !README.md
 !.gitignore
