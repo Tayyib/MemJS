@@ -1,5 +1,5 @@
 # MemJS
-An unofficial Memrise utility allowing Memrise users and creators to download courses
+An unofficial Memrise utility allowing Memrise users and creators to download courses (only text data).
 
 # Installation
 First, you will need the appropriate user script add-on for your browser:
