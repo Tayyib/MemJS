@@ -18,7 +18,6 @@ Forked from github.com/scytalezero/MemriseUtilities
  */
 
 var html = "https://raw.githubusercontent.com/Tayyib/MemJS/master/MemJS.html";
-var editPageRegex = /.*\/edit\/.*/i;
 var databasePageRegex = /.*\/edit\/database\/.*/i;
 var columnDelimiter = '\t';
 var thingsMatch = [];
@@ -37,13 +36,6 @@ var step;
 
         dataURL = document.URL + '?page=%s';
         levelCount = Number($(".pagination-centered li:nth-last-child(2)").text().replace(/\s+/g, ''));
-    }
-    else if (document.URL.search(editPageRegex) === 0)
-    {
-        thingsMatch.push('tr.thing', 'div.text');  // fixme
-
-        dataURL = document.URL + '%s';
-        levelCount = Number($(".level.collapsed:last-child .level-handle")[0].textContent);
     }
     else if ($(".levels.clearfix").length !== 0)
     {
