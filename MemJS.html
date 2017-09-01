@@ -15,19 +15,24 @@
             background-color : white;
         }
 
-        #MemJS-Header
+        #MemJS-UI > *
         {
-            padding : 3px 0 3px;
+            padding : 9px 0;
         }
 
-        #MemJS-Title, #MemJS-Buttons
+        #MemJS-Header > *
         {
             display : inline;
         }
 
-        #MemJS-Buttons > button
+        #MemJS-Header > *:not(h3)
         {
             float : right;
+        }
+
+        #MemJS-Header > *:not(h3):not(label)
+        {
+            margin-left : 9px;
         }
 
         #MemJS-TextArea
@@ -41,11 +46,13 @@
 <div id='MemJS-UI'>
     <div id='MemJS-Header'>
         <h3 id='MemJS-Title'>Ready to download the course.</h3>
-        <!-- TODO -> checkbox (#level tag), combobox (column delimiter) -->
-        <div id='MemJS-Buttons'>
-            <button id='MemJS-CopyData'>Copy to clipboard!</button>
-            <button id='MemJS-Download'>Download!</button>
-        </div>
+        <button id='MemJS-CopyData'>Copy to clipboard!</button>
+        <button id='MemJS-Download'>Download!</button>
+        <select>
+            <option value="tab">Tab</option>
+            <option value="comma">Comma</option>
+        </select>
+        <label>Add level tag.</label><input type="checkbox">
     </div>
     <textarea id='MemJS-TextArea'></textarea>
 </div>
