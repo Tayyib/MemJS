@@ -8,9 +8,7 @@
         {
             margin           : 5px 15px;
             padding          : 0 12px;
-            border-style     : solid;
-            border-color     : rgb(222, 222, 222);
-            border-width     : 1px;
+            border-color     : 1px solid rgb(222, 222, 222);
             border-radius    : 5px;
             background-color : white;
         }
@@ -40,6 +38,12 @@
             width  : 100%;
             height : 222px;
         }
+
+        #MemJS-CheckBox
+        {
+            width         : 85px;
+            border-radius : 4px;
+        }
     </style>
 </head>
 <body>
@@ -48,9 +52,9 @@
         <h3 id='MemJS-Title'>Ready to download the course.</h3>
         <button id='MemJS-CopyData'>Copy to clipboard!</button>
         <button id='MemJS-Download'>Download!</button>
-        <select>
-            <option value="tab">Tab</option>
-            <option value="comma">Comma</option>
+        <select id='MemJS-CheckBox'>
+            <option value='tab'>TSV</option>
+            <option value='comma'>CSV</option>
         </select>
         <label>Add level tag.</label><input type="checkbox">
     </div>
