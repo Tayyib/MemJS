@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <!--suppress ALL -->
-<html lang="en">
+<html lang='en'>
 <head>
-    <meta charset="UTF-8">
+    <meta charset='UTF-8'>
     <style>
         #MemJS-UI
         {
             margin           : 5px 15px;
             padding          : 0 12px;
-            border-color     : 1px solid rgb(222, 222, 222);
+            border           : 1px solid rgb(222, 222, 222);
             border-radius    : 5px;
             background-color : white;
         }
@@ -18,17 +18,20 @@
             padding : 9px 0;
         }
 
-        #MemJS-Header > *
+        #MemJS-Header, #MemJS-Header > *
         {
-            display : inline;
+            width         : 100%;
+            display       : flex;
+            align-items   : center;
+            align-content : center;
         }
 
-        #MemJS-Header > *:not(h3)
+        #MemJS-Header .right
         {
-            float : right;
+            justify-content : flex-end;
         }
 
-        #MemJS-Header > *:not(h3):not(label)
+        #MemJS-Header .right > *:not(label)
         {
             margin-left : 9px;
         }
@@ -49,14 +52,18 @@
 <body>
 <div id='MemJS-UI'>
     <div id='MemJS-Header'>
-        <h3 id='MemJS-Title'>Ready to download the course.</h3>
-        <button id='MemJS-CopyData'>Copy to clipboard!</button>
-        <button id='MemJS-Download'>Download!</button>
-        <select id='MemJS-CheckBox'>
-            <option value='tab'>TSV</option>
-            <option value='comma'>CSV</option>
-        </select>
-        <label>Add level tag.</label><input type="checkbox">
+        <span class="left">
+            <h3 id='MemJS-Title'>Ready to download the course.</h3>
+        </span>
+        <span class="right">
+            <input type='checkbox'><label>Add level tag.</label>
+            <select id='MemJS-CheckBox'>
+                <option value='tab'>TSV</option>
+                <option value='comma'>CSV</option>
+            </select>
+            <button id='MemJS-Download'>Download!</button>
+            <button id='MemJS-CopyData'>Copy to clipboard!</button>
+        </span>
     </div>
     <textarea id='MemJS-TextArea'></textarea>
 </div>
