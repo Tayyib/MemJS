@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          MemJS
-// @version       0.8
+// @version       0.9
 // @description   Download Memrise courses. For users and creators.
 // @author        Tayyib <m.tayyib.yel@gmail.com>
 // @copyright     Licensed under Apache 2.0
@@ -14,16 +14,21 @@
 // ==/UserScript==
 
 /*
-Forked from github.com/scytalezero/MemriseUtilities
+Forked from github.com/scytalezero/MemriseUtilities.
+Refactored and added some new features:
+ * UI improvements
+ * Customizable options
+ * Download option for course creators
  */
 
-var html = "https://raw.githubusercontent.com/Tayyib/MemJS/master/MemJS.html";
+var html = "https://bitbucket.org/Tayyip/memjs-test/raw/f5486a17e57ec2bed6d168193cd568fba1e53743/MemJS.html";
 var databasePageRegex = /.*\/edit\/database\/.*/i;
-var columnDelimiter = '\t';
-var thingsMatch = [];
+var thingMatch = [];
 var promises = [];
 var dataURL;
 var levelCount;
+var delimiter;
+var setTag;
 var step;
 
 (function ()
@@ -32,14 +37,14 @@ var step;
 
     if (document.URL.search(databasePageRegex) === 0)
     {
-        thingsMatch.push('tr.thing', 'div.text');
+        thingMatch.push('tr.thing', 'div.text');
 
         dataURL = document.URL + '?page=%s';
         levelCount = Number($(".pagination-centered li:nth-last-child(2)").text().replace(/\s+/g, ''));
     }
     else if ($(".levels.clearfix").length !== 0)
     {
-        thingsMatch.push('div.text-text', 'div[class^="col_"]');
+        thingMatch.push('div.text-text', 'div[class^="col_"]');
 
         dataURL = document.URL + '%s';
         levelCount = Number($(".level:last-child .level-index")[0].textContent);
@@ -63,10 +68,12 @@ var step;
         {
             $('#MemJS-UI').hide();
             $('#MemJS-TextArea').hide();
-            $('#MemJS-CopyData').hide();
+            $('#MemJS-CopyData').hide().click(CopyData);
             $('#MemJS-ShowHide').click(ShowHideMemJS);
             $('#MemJS-Download').click(DoAjax);
-            $('#MemJS-CopyData').click(CopyData);
+
+            // Notice! Sensitive content - DO NOT FORGET to update the following line when you modify "thingMatch[]".
+            if (thingMatch[0] === 'tr.thing') $('#MemJS-CheckBox, label').hide();
         });
     }
 
@@ -90,6 +97,8 @@ var step;
         }
 
         step = 1;
+        delimiter = $('#MemJS-ComboBox').val();
+        setTag = $('#MemJS-CheckBox').is(':checked');
 
         for (i = 1; i <= levelCount; i++)
         {
@@ -108,15 +117,18 @@ var step;
     {
         $('#MemJS-Title').html("Loading... " + step + "/" + levelCount);
 
-        $(data).find(thingsMatch[0]).each(function (index)
+        if (setTag) var levelName = $(data).find('h3.progress-box-title').text().trim();
+
+        $(data).find(thingMatch[0]).each(function (index)
         {
-            var match = $(this).find(thingsMatch[1]);
+            var match = $(this).find(thingMatch[1]);
             match.each(function (index)
             {
                 promises[jqXHR.level] += $(this).text();
-                if (index !== match.length - 1) promises[jqXHR.level] += columnDelimiter;
+                if (index !== match.length - 1) promises[jqXHR.level] += delimiter;
             });
 
+            if (setTag) promises[jqXHR.level] += delimiter + levelName;
             promises[jqXHR.level] += '\n';
         });
 
@@ -127,8 +139,7 @@ var step;
     function OnFinish()
     {
         $('#MemJS-CopyData').show();
-        $("#MemJS-TextArea").append(promises);
-        $('#MemJS-TextArea').show();
+        $("#MemJS-TextArea").append(promises).show();
 
         $('#MemJS-Title').text("Here is the course data (text only):");
     }

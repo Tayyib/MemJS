@@ -18,20 +18,17 @@
             padding : 9px 0;
         }
 
-        #MemJS-Header, #MemJS-Header > *
+        #MemJS-Header > *
         {
-            width         : 100%;
-            display       : flex;
-            align-items   : center;
-            align-content : center;
+            display : inline;
         }
 
-        #MemJS-Header .right
+        #MemJS-Header > *:not(h3)
         {
-            justify-content : flex-end;
+            float : right;
         }
 
-        #MemJS-Header .right > *:not(label)
+        #MemJS-Header > *:not(h3):not(label)
         {
             margin-left : 9px;
         }
@@ -42,7 +39,7 @@
             height : 222px;
         }
 
-        #MemJS-CheckBox
+        #MemJS-ComboBox
         {
             width         : 85px;
             border-radius : 4px;
@@ -52,18 +49,14 @@
 <body>
 <div id='MemJS-UI'>
     <div id='MemJS-Header'>
-        <span class="left">
-            <h3 id='MemJS-Title'>Ready to download the course.</h3>
-        </span>
-        <span class="right">
-            <input type='checkbox'><label>Add level tag.</label>
-            <select id='MemJS-CheckBox'>
-                <option value='tab'>TSV</option>
-                <option value='comma'>CSV</option>
-            </select>
-            <button id='MemJS-Download'>Download!</button>
-            <button id='MemJS-CopyData'>Copy to clipboard!</button>
-        </span>
+        <h3 id='MemJS-Title'>Ready to download the course.</h3>
+        <button id='MemJS-Download'>Download!</button>
+        <button id='MemJS-CopyData'>Copy to clipboard!</button>
+        <select id='MemJS-ComboBox'>
+            <option value='&#9'>TSV</option>
+            <option value=','>CSV</option>
+        </select>
+        <label>Add level tag.</label><input id='MemJS-CheckBox' type='checkbox'>
     </div>
     <textarea id='MemJS-TextArea'></textarea>
 </div>
