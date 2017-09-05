@@ -21,7 +21,7 @@ Refactored and added some new features:
  * Download option for course creators
  */
 
-var html = "https://bitbucket.org/Tayyip/memjs-test/raw/f5486a17e57ec2bed6d168193cd568fba1e53743/MemJS.html";
+var html = "https://raw.githubusercontent.com/Tayyib/MemJS/master/MemJS.html";
 var databasePageRegex = /.*\/edit\/database\/.*/i;
 var thingMatch = [];
 var promises = [];
