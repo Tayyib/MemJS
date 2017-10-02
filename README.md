@@ -2,9 +2,9 @@
 An unofficial Memrise utility allowing Memrise users and creators to download courses (only text data).
 
 # Installation
-First, you will need the appropriate user script add-on for your browser:
-- Chrome: [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en)
-- Firefox: [Greasemonkey](https://addons.mozilla.org/en-us/firefox/addon/greasemonkey/)
+First, you will need to install Tampermonkey add-on for your browser:
+- [for Chrome](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)
+- [for Firefox](https://addons.mozilla.org/en-us/firefox/addon/tampermonkey/) 
  
 Next, [just click here](https://github.com/Tayyib/MemJS/raw/master/MemJS.user.js) 
 and you should be prompted to install the script. That's it!
