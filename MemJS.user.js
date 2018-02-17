@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          MemJS
-// @version       0.9
+// @version       1.0
 // @description   Download Memrise courses. For users and creators.
 // @author        Tayyib <m.tayyib.yel@gmail.com>
 // @copyright     Licensed under Apache 2.0
