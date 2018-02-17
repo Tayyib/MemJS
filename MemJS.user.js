@@ -68,11 +68,11 @@ var step;
         {
             $('#MemJS-UI').hide();
             $('#MemJS-TextArea').hide();
-            $('#MemJS-CopyData').hide().click(CopyData);
-            $('#MemJS-ShowHide').click(ShowHideMemJS);
-            $('#MemJS-Download').click(DoAjax);
+            $('#MemJS-CopyData').hide().on('click', CopyData);
+            $('#MemJS-ShowHide').on('click', ShowHideMemJS);
+            $('#MemJS-Download').on('click', DoAjax);
 
-            // Notice! Sensitive content - DO NOT FORGET to update the following line when you modify "thingMatch[]".
+            // TODO! Sensitive content - DO NOT FORGET to update the following line when you modify "thingMatch[]".
             if (thingMatch[0] === 'tr.thing') $('#MemJS-CheckBox, label').hide();
         });
     }
@@ -146,7 +146,7 @@ var step;
 
     function CopyData()
     {
-        $('#MemJS-TextArea').select();
+        $('#MemJS-TextArea').trigger('select');
         document.execCommand('copy');
     }
 })();
