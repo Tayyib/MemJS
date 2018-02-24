@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          MemJS
-// @version       1.0
+// @version       1.1
 // @description   Download Memrise courses. For users and creators.
 // @author        Tayyib <m.tayyib.yel@gmail.com>
 // @copyright     Licensed under Apache 2.0
@@ -69,7 +69,7 @@ var step;
             $('#MemJS-UI').hide();
             $('#MemJS-TextArea').hide();
             $('#MemJS-CopyData').hide().on('click', CopyData);
-            $('#MemJS-ShowHide').on('click', ShowHideMemJS);
+            $('#MemJS-ShowHide').on('click', ToggleUI);
             $('#MemJS-Download').on('click', DoAjax);
 
             // TODO! Sensitive content - DO NOT FORGET to update the following line when you modify "thingMatch[]".
@@ -77,19 +77,16 @@ var step;
         });
     }
 
-    function ShowHideMemJS()
+    function ToggleUI()
     {
-        var ui = $('#MemJS-UI');
-
-        if (ui.is(':visible') === true) ui.hide();
-        else ui.show();
+        $('#MemJS-UI').toggle();
     }
 
     function DoAjax()
     {
         $('#MemJS-Download').hide();
         $('#MemJS-UI').show();
-        $('#MemJS-Title').html("Preparing...");
+        $('#MemJS-Title').text("Preparing...");
 
         for (var i = 1; i <= levelCount; i++)
         {
@@ -102,34 +99,25 @@ var step;
 
         for (i = 1; i <= levelCount; i++)
         {
-            // @formatter:off
             $.ajax({
                 dataType: 'html',
                 url: dataURL.replace(/%s/, i),
                 success: AbstractData,
                 beforeSend: function (jqXHR, settings) { jqXHR.level = i; }
             });
-            // @formatter:on
         }
     }
 
     function AbstractData(data, status, jqXHR)
     {
-        $('#MemJS-Title').html("Loading... " + step + "/" + levelCount);
+        $('#MemJS-Title').text("Loading... " + step + "/" + levelCount);
 
-        if (setTag) var levelName = $(data).find('h3.progress-box-title').text().trim();
+        var levelName = setTag ? delimiter + $(data).find('h3.progress-box-title').text().trim() : '';
 
-        $(data).find(thingMatch[0]).each(function (index)
+        $(data).find(thingMatch[0]).each(function ()  // foreach -> things
         {
-            var match = $(this).find(thingMatch[1]);
-            match.each(function (index)
-            {
-                promises[jqXHR.level] += $(this).text();
-                if (index !== match.length - 1) promises[jqXHR.level] += delimiter;
-            });
-
-            if (setTag) promises[jqXHR.level] += delimiter + levelName;
-            promises[jqXHR.level] += '\n';
+            var columns = $(this).find(thingMatch[1]).map(function () { return $(this).text(); }).get();
+            promises[jqXHR.level] += columns.join(delimiter) + levelName + '\n';
         });
 
         if (step === levelCount) OnFinish();
